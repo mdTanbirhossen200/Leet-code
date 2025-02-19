@@ -1,37 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Node {
-  public:
+class Node
+{
+public:
     int data;
     Node *next;
-    Node *prev;
-    Node(int val) {
-        data = val;
-        next = nullptr;
-        prev = nullptr;
+    Node(int data)
+    {
+        this->data = data;
+        this->next = nullptr;
     }
 };
 
-int findSize(Node *curr) {
-    int size = 0;
-    while (curr != NULL) {
-        size++;
-        curr = curr->next;
-    }
-    return size;
+int count(struct Node *head, int key)
+{
+    if (head == NULL)
+        return 0;
+
+    int ans = count(head->next, key);
+
+    if (head->data == key)
+        ans++;
+
+    return ans;
 }
 
-int main() {
-  
+int main()
+{
     Node *head = new Node(1);
     head->next = new Node(2);
-    head->next->prev = head;
-    head->next->next = new Node(3);
-    head->next->next->prev = head->next;
-    head->next->next->next = new Node(4);
-    head->next->next->next->prev = head->next->next;
+    head->next->next = new Node(1);
+    head->next->next->next = new Node(2);
+    head->next->next->next->next = new Node(1);
 
-    cout << findSize(head);
+    int key = 1;
+
+    cout << count(head, key);
     return 0;
 }
